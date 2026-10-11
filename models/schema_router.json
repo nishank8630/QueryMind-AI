@@ -1,0 +1,89 @@
+{
+  "model_version": "1.0.0",
+  "algorithm": "TF-IDF + OneVsRest LogisticRegression",
+  "trained_at": "2026-10-11T13:48:10.822243",
+  "train_samples": 420,
+  "val_samples": 90,
+  "test_samples": 90,
+  "classes": [
+    "customers",
+    "products",
+    "categories",
+    "suppliers",
+    "orders",
+    "order_items",
+    "payments",
+    "returns",
+    "inventory",
+    "website_sessions"
+  ],
+  "test_metrics": {
+    "micro_f1": 0.9811,
+    "macro_f1": 0.9727,
+    "precision": 1.0,
+    "recall": 0.963,
+    "baseline_orders_micro_f1": 0.2133
+  },
+  "per_table_metrics": {
+    "customers": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 13
+    },
+    "products": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 25
+    },
+    "categories": {
+      "precision": 1.0,
+      "recall": 0.692,
+      "f1": 0.818,
+      "support": 13
+    },
+    "suppliers": {
+      "precision": 1.0,
+      "recall": 0.833,
+      "f1": 0.909,
+      "support": 6
+    },
+    "orders": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 24
+    },
+    "order_items": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 9
+    },
+    "payments": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 13
+    },
+    "returns": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 10
+    },
+    "inventory": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 9
+    },
+    "website_sessions": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 13
+    }
+  }
+}
