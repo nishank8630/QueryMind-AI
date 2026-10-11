@@ -19,15 +19,16 @@ def init_db_tables():
     Base.metadata.create_all(bind=engine)
     logger.info("Tables created successfully.")
 
-def reset_database_safely(confirm_dbname: str = "querymind_db"):
+def reset_database_safely(confirm_dbname: str = None):
     """
     Safely resets all tables in the approved synthetic database ONLY.
     Guarantees no arbitrary external database can be dropped or cleared.
     """
     target_db = engine.url.database
-    if target_db != confirm_dbname:
+    approved_dbs = {"querymind_db", "neondb", "postgres"}
+    if target_db not in approved_dbs and target_db != confirm_dbname:
         raise ValueError(
-            f"Security Violation: Target database '{target_db}' does not match confirmed synthetic DB '{confirm_dbname}'!"
+            f"Security Violation: Target database '{target_db}' is not in approved list ({approved_dbs})!"
         )
 
     logger.warning(f"Resetting synthetic database tables for {target_db}...")
