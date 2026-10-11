@@ -55,6 +55,21 @@ class Settings(BaseSettings):
 @lru_cache()
 def get_settings() -> Settings:
     settings = Settings()
+    
+    # Try reading from Streamlit Cloud secrets if running on Streamlit Cloud
+    try:
+        import streamlit as st
+        if hasattr(st, "secrets") and "DATABASE_URL" in st.secrets:
+            cloud_db_url = st.secrets["DATABASE_URL"]
+            if cloud_db_url and "your-host" not in cloud_db_url:
+                settings.DATABASE_URL = str(cloud_db_url)
+        if hasattr(st, "secrets") and "GROQ_API_KEY" in st.secrets:
+            settings.GROQ_API_KEY = str(st.secrets["GROQ_API_KEY"])
+        if hasattr(st, "secrets") and "APP_MODE" in st.secrets:
+            settings.APP_MODE = str(st.secrets["APP_MODE"])
+    except Exception:
+        pass
+
     # Ensure directories exist
     settings.DATA_DIR.mkdir(parents=True, exist_ok=True)
     settings.MODELS_DIR.mkdir(parents=True, exist_ok=True)
