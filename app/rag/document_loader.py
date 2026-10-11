@@ -89,8 +89,21 @@ class KnowledgeDocumentLoader:
         return documents
 
     def load_schema_documents(self) -> List[Dict[str, Any]]:
-        """Extracts schema documentation dynamically from the live database."""
-        return self.schema_inspector.generate_ddl_and_descriptions()
+        """Extracts schema documentation dynamically from the live database or falls back to static metadata."""
+        try:
+            return self.schema_inspector.generate_ddl_and_descriptions()
+        except Exception as e:
+            # Fallback to static schema descriptions markdown if live DB is not connected
+            schema_file = self.kb_dir / "schema_descriptions.md"
+            if schema_file.exists():
+                return [{
+                    "document_id": "schema_fallback",
+                    "document_type": "schema",
+                    "title": "Database Schema Reference (Fallback)",
+                    "content": schema_file.read_text(encoding="utf-8"),
+                    "metadata": {"source": "schema_descriptions.md"}
+                }]
+            return []
 
     def load_all_documents(self) -> List[Dict[str, Any]]:
         """Aggregates all schema, business rule, and SQL example documents."""

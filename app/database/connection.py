@@ -8,16 +8,22 @@ from app.config import get_settings
 logger = logging.getLogger("querymind.database")
 settings = get_settings()
 
-# Engine with pooling
+# Engine with pooling (Postgres vs SQLite fallback)
 try:
-    engine = create_engine(
-        settings.DATABASE_URL,
-        pool_size=10,
-        max_overflow=20,
-        pool_pre_ping=True,
-        pool_recycle=300,
-        connect_args={"connect_timeout": 5}
-    )
+    if "sqlite" in settings.DATABASE_URL:
+        engine = create_engine(
+            settings.DATABASE_URL,
+            connect_args={"check_same_thread": False}
+        )
+    else:
+        engine = create_engine(
+            settings.DATABASE_URL,
+            pool_size=5,
+            max_overflow=10,
+            pool_pre_ping=True,
+            pool_recycle=300,
+            connect_args={"connect_timeout": 5}
+        )
 except Exception as e:
     logger.error(f"Failed to create database engine: {e}")
     engine = None
