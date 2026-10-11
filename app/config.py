@@ -25,7 +25,7 @@ class Settings(BaseSettings):
     
     # Database
     DATABASE_URL: str = Field(
-        default="postgresql+psycopg://postgres:12345@localhost:5433/querymind_db",
+        default="postgresql+psycopg://neondb_owner:npg_4QRTamB0CKeD@ep-shy-darkness-b5aowtw4.c-7.us-east-2.aws.neon.tech/neondb?sslmode=require",
         env="DATABASE_URL"
     )
     MAX_QUERY_ROWS: int = Field(default=500, env="MAX_QUERY_ROWS")
